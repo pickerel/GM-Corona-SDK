@@ -440,6 +440,7 @@ function gameminion:getAchievement(achievement)
 			return false
 		else
 			print("Achievement: "..event.response)
+			return event.response
 		end
 	end
 
@@ -461,6 +462,8 @@ function gameminion:getMyAchievements()
 			return false
 		else
 			print("My Achievements: "..event.response)
+			local netResponse = {name="netResponse", target=event.response}
+			Runtime:dispatchEvent(netResponse)
 		end
 	end
 
@@ -629,6 +632,35 @@ end
 
 -------------------------------------------------
 
+function gameminion:addUserToChat(userID, chatroomID)
+
+end
+
+-------------------------------------------------
+
+function gameminion:sendChatMessage(chatroomID, message)
+	local params = "auth_token="..self.authToken
+	params = params.."&chat="..chatroomID
+
+	local path = "chats.xml"
+
+	-- set currentUser when it gets it
+	local  function networkListener(event)
+		if (event.isError) then
+			print("Network Error")
+			print("Error: "..event.response)
+			return false
+		else
+			print("Chat Message Sent: "..event.response)
+		end
+	end
+
+	postGM(path, params, networkListener)
+
+end
+
+-------------------------------------------------
+
 function gameminion:getChatHistory(chatroomID)
 	local params = "auth_token="..self.authToken
 
@@ -653,7 +685,7 @@ end
 function gameminion:getUsersInChatRoom(chatroomID)
 	local params = "auth_token="..self.authToken
 
-	local path = "chats/"..chatroomID.."/members.xml"
+	local path = "chats/"..chatroomID.."/members.json"
 
 	-- set currentUser when it gets it
 	local  function networkListener(event)
@@ -688,9 +720,9 @@ end
 
 function gameminion:addFriend(user)
 	local params = "auth_token="..self.authToken
-	params = params.."&user_id="..user
+	params = params.."&friend_id="..user
 
-	local path = "users/"
+	local path = "users/add_friend.json"
 
 	-- set currentUser when it gets it
 	local  function networkListener(event)
@@ -699,7 +731,7 @@ function gameminion:addFriend(user)
 			print("Error: "..event.response)
 			return false
 		else
-			print("Analytics Event Submitted: "..event.response)
+			print("Friend Added: "..event.response)
 		end
 	end
 
@@ -915,6 +947,7 @@ end
 
 function gameminion:submitMove(moveContent, targetGroup, targetUser, matchID)
 	local params = "auth_token="..self.authToken
+	params = params.."&content="..moveContent
 	
 	-- if targetgroup specified then add parameter
 	if (targetGroup ~= nil) then
@@ -957,6 +990,28 @@ function gameminion:getRecentMoves(matchID)
 			return false
 		else
 			print("Recent Match Moves: "..event.response)
+		end
+	end
+
+	getGM(path, params, networkListener)
+end
+
+-------------------------------------------------
+
+function gameminion:getAllMoves(matchID)
+	local params = "auth_token="..self.authToken
+	params = params.."&criteria=all"
+
+	local path = "games/"..self.gameID.."/matches/"..matchID.."/get_recent_moves.xml"
+
+	-- set currentUser when it gets it
+	local  function networkListener(event)
+		if (event.isError) then
+			print("Network Error")
+			print("Error: "..event.response)
+			return false
+		else
+			print("All Match Moves: "..event.response)
 		end
 	end
 
