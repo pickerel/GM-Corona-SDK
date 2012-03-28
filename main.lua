@@ -37,6 +37,7 @@ end
 
 Runtime:addEventListener("netResponse", netResListener)
 
+
 local function gmCallListener()
 	--gm:getMyProfile()
 	--gm:getUserProfile("4ead491c5ceaa10001000015")
@@ -48,7 +49,7 @@ local function gmCallListener()
 	
 	--gm:getAchievements()
 	--gm:unlockAchievement("4f705899f903950001000016")
-	gm:getMyAchievements()
+	--gm:getMyAchievements()
 	--gm:getAchievement("4f705899f903950001000016")
 	--gm:submitEvent(analyticsEvent)
 	
@@ -67,23 +68,26 @@ local function gmCallListener()
 	
 	--gm:createMatch()
 	--gm:getMatches()
-	--gm:acceptChallenge("4f72dadc36bac50001000003")
+	--gm:acceptChallenge("4f7309d702b79f000100000b")
 	--gm:getMatchDetails("4f72c89e7b57140001000002")
-	--gm:addPlayerToMatch("4f70674d97e9160001000009", "4f72dadc36bac50001000003")
-	--gm:startMatch("4f72dadc36bac50001000003")
+	--gm:addPlayerToMatch("4f70674d97e9160001000009", "4f7309d702b79f000100000b")
+	--gm:startMatch("4f7309d702b79f000100000b")
 	--gm:submitMove("move 3", nil, nil, "4f71ab40b07bbe0001000003")
 	--gm:getRecentMoves("4f72c89e7b57140001000002")
 	--gm:getAllMoves("4f72c89e7b57140001000002")
 	--gm:createRandomChallenge("4f719f4109451e0001000011")
 	--gm:createMPChannel("4f719f4109451e0001000011")
-	--gm:pollMP("4f72dadc36bac50001000004")
-	--gm:pollMP("4f72db0436bac50001000005")
+	gm:pollMP("4f7309d702b79f000100000c")
+	gm:pollMP("4f730a0002b79f000100000d")
 	
 end
 timer.performWithDelay(5000, gmCallListener)
 
 local function mpCallListener()
-	--gm:submitMove("move 2", nil, nil, "4f72dadc36bac50001000003")
+	for i=1, 100 do
+		local content = "move "..i
+		gm:submitMove(content, nil, nil, "4f7309d702b79f000100000b")
+	end
 	--gm:acceptChallenge("4f71b41173860c0001000001")
 
 end

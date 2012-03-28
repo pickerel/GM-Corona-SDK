@@ -461,7 +461,6 @@ function gameminion:getMyAchievements()
 			print("Error: "..event.response)
 			return false
 		else
-			print("My Achievements: "..event.response)
 			local netResponse = {name="netResponse", target=event.response}
 			Runtime:dispatchEvent(netResponse)
 		end
