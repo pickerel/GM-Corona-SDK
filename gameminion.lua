@@ -161,10 +161,59 @@ local function getGM(path, parameters, networkListener)
 end
 
 local function putGM(path, parameters, putData)
+	-- PUT call to GM
 
+	local params = {}
+
+
+	local authHeader = createBasicAuthHeader(GM_ACCESS_KEY, GM_SECRET_KEY)
+
+	local headers = {}
+	headers["Authorization"] = authHeader
+
+	params.headers = headers
+
+	local url = "http://"..GM_URL
+
+	print("\n----------------")
+	print("-- PUT Call ---")
+	print("Put URL: "..url)
+	print("Put Path: "..path)
+	print("Put Parameters: "..parameters)
+	print("----------------")
+
+	local hReq = url.."/"..path.."?"..parameters
+
+	print("\nPut Request: "..hReq)
+	network.request(hReq, "PUT", networkListener, params)
 end
 
 local function deleteGM(path, parameters)
+	-- Delete call to GM
+
+	local params = {}
+
+
+	local authHeader = createBasicAuthHeader(GM_ACCESS_KEY, GM_SECRET_KEY)
+
+	local headers = {}
+	headers["Authorization"] = authHeader
+
+	params.headers = headers
+
+	local url = "http://"..GM_URL
+
+	print("\n----------------")
+	print("-- DELETE Call ---")
+	print("Delete URL: "..url)
+	print("Delete Path: "..path)
+	print("Delete Parameters: "..parameters)
+	print("----------------")
+
+	local hReq = url.."/"..path.."?"..parameters
+
+	print("\nDelete Request: "..hReq)
+	network.request(hReq, "DELETE", networkListener, params)
 
 end
 
@@ -518,7 +567,22 @@ end
 -------------------------------------------------
 
 function gameminion:networkSave(data)
+	local params = "auth_token="..self.authToken
 
+	local path = "storage.json"
+
+	-- set cloudStorageBox when it gets it
+	local  function networkListener(event)
+		if (event.isError) then
+			print("Network Error")
+			print("Error: "..event.response)
+			return false
+		else
+			print("Cloud Storage Box Updated: "..event.response)
+		end
+	end
+
+	putGM(path, params, networkListener)
 
 end
 
@@ -712,6 +776,22 @@ end
 -------------------------------------------------
 
 function gameminion:getFriends()
+	local params = "auth_token="..self.authToken
+
+	local path = "users/friends.json"
+
+	-- set currentUser when it gets it
+	local  function networkListener(event)
+		if (event.isError) then
+			print("Network Error")
+			print("Error: "..event.response)
+			return false
+		else
+			print("Friends: "..event.response)
+		end
+	end
+
+	getGM(path, params, networkListener)
 
 end
 
@@ -721,7 +801,7 @@ function gameminion:addFriend(user)
 	local params = "auth_token="..self.authToken
 	params = params.."&friend_id="..user
 
-	local path = "users/add_friend.json"
+	local path = "users/friends.json"
 
 	-- set currentUser when it gets it
 	local  function networkListener(event)
@@ -740,7 +820,23 @@ end
 -------------------------------------------------
 
 function gameminion:removeFriend(user)
+	local params = "auth_token="..self.authToken
+	params = params.."&friend_id="..user
 
+	local path = "users/friends"
+
+	-- set currentUser when it gets it
+	local  function networkListener(event)
+		if (event.isError) then
+			print("Network Error")
+			print("Error: "..event.response)
+			return false
+		else
+			print("Friend Removed: "..event.response)
+		end
+	end
+
+	deleteGM(path, params, networkListener)
 end
 
 -------------------------------------------------
