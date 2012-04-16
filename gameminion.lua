@@ -597,7 +597,8 @@ end
 function gameminion:getCloudStorage(storageID)
 	local params = "auth_token="..self.authToken
 
-	local path = "storage/"..storageID
+	--local path = "storage/"..storageID
+	local path = "storage.json"
 
 	-- set currentUser when it gets it
 	local  function networkListener(event)
