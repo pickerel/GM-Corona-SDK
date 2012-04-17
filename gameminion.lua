@@ -201,7 +201,7 @@ local function deleteGM(path, parameters)
 
 	params.headers = headers
 
-	local url = "http://"..GM_URL
+	local url = "http://"..GM_ACCESS_KEY..":"..GM_SECRET_KEY.."@"..GM_URL
 
 	print("\n----------------")
 	print("-- DELETE Call ---")
@@ -779,7 +779,7 @@ end
 function gameminion:getFriends()
 	local params = "auth_token="..self.authToken
 
-	local path = "users/friends.json"
+	local path = "friends.json"
 
 	-- set currentUser when it gets it
 	local  function networkListener(event)
@@ -802,7 +802,7 @@ function gameminion:addFriend(user)
 	local params = "auth_token="..self.authToken
 	params = params.."&friend_id="..user
 
-	local path = "users/friends.json"
+	local path = "friends.json"
 
 	-- set currentUser when it gets it
 	local  function networkListener(event)
@@ -824,7 +824,7 @@ function gameminion:removeFriend(user)
 	local params = "auth_token="..self.authToken
 	params = params.."&friend_id="..user
 
-	local path = "users/friends"
+	local path = "friends.json"
 
 	-- set currentUser when it gets it
 	local  function networkListener(event)
