@@ -22,4 +22,4 @@ Here is a rough list of features:
   - **Push Notification** - iOS, Android, WP7 and generic HTTP Webhook
   - **Cloud Save**
 
-_Please note this is a work in progress and is not yet ready for production use!_
+_Please note this is a work in progress!_
