@@ -16,13 +16,13 @@ local gm = require("gameminion")
 local json = require("json")
 
 -- initialize Game Minion
+-- Make sure you use your own games keys!
 gm = gm.init("1d84d6e6f8dbb1bb191013d9d2ce05ae158203b9", "e3e1e39c52a6ac3a8b409c52e17a2ce2ef572914")
 
 
 -- create new user account or login existing
 --gm:registerUser("Joe", "Blogs", "jbloggs", "jbloggs@mailmail.com", "password")
-gm:loginAPI("ahamidi@me.com", "password")
---gm:loginAPI("jbloggs@mailmail.com", "password")
+gm:loginAPI("jbloggs@mailmail.com", "password")
 
 -- analytics event table
 local analyticsEvent = {
@@ -54,7 +54,7 @@ local function gmCallListener()
 	--gm:getUserProfile("4ead491c5ceaa10001000015")
 	--gm:addFriend("4f0be09cc8c1950001000001")
 	--gm:getFriends()
-	gm:removeFriend("4f0be09cc8c1950001000001")
+	--gm:removeFriend("4f0be09cc8c1950001000001")
 
 	--gm:getLeaderboards()
 	--gm:getLeaderboard("4f6f1e7e6b789d0001000008")
@@ -72,8 +72,8 @@ local function gmCallListener()
 	
 	--gm:registerDevice("11111111111111111")
 	--gm:createCloudBox()
-	--gm:networkSave(saveDataBlob)
-	--gm:getCloudStorage("4f8c0d34f652530001000007")
+	--gm:networkSave(saveDataBlob, "4f8d29770c343d000100000c")
+	--gm:getCloudStorage()
 	
 	--gm:createChatRoom("test2")
 	--gm:getChatRooms()
@@ -101,7 +101,7 @@ timer.performWithDelay(5000, gmCallListener)
 local function mpCallListener()
 	for i=1, 100 do
 		local content = "move "..i
-		gm:submitMove(content, nil, nil, "4f7309d702b79f000100000b")
+		--gm:submitMove(content, nil, nil, "4f7309d702b79f000100000b")
 	end
 	--gm:acceptChallenge("4f71b41173860c0001000001")
 

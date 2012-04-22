@@ -39,7 +39,7 @@ local gameminion_mt = { __index = gameminion }	-- metatable
 -- HELPERS
 -------------------------------------------------
 
-local GM_URL = "dev-gameminion.herokuapp.com"
+local GM_URL = "api.gameminion.com"
 local GM_ACCESS_KEY = ""
 local GM_SECRET_KEY = ""
 local authToken = ""
@@ -232,7 +232,7 @@ function gameminion.init(accessKey, secretKey)	-- constructor
 		authToken = authToken,
 		accessKey = GM_ACCESS_KEY,
 		secretKey = GM_SECRET_KEY,
-		gameID = "4f6f1e456b789d0001000002",
+		gameID = "0000000000000000000",
 		cloudStorageBox = cloudStorageBox,
 		gameminion = gameminion
 	}
@@ -546,7 +546,7 @@ end
 function gameminion:createCloudBox()
 	local params = "auth_token="..self.authToken
 
-	local path = "storage.json"
+	local path = "storages.xml"
 
 	-- set cloudStorageBox when it gets it
 	local  function networkListener(event)
@@ -566,10 +566,10 @@ end
 
 -------------------------------------------------
 
-function gameminion:networkSave(data)
+function gameminion:networkSave(data, storageID)
 	local params = "auth_token="..self.authToken
 
-	local path = "storage.json"
+	local path = "storages.xml/"..storageID
 
 	-- set cloudStorageBox when it gets it
 	local  function networkListener(event)
@@ -588,17 +588,32 @@ end
 
 -------------------------------------------------
 
-function gameminion:networkLoad()
+function gameminion:networkLoad(storageID)
+	local params = "auth_token="..self.authToken
 
+	local path = "storages.xml/"..storageID
+
+	-- set currentUser when it gets it
+	local  function networkListener(event)
+		if (event.isError) then
+			print("Network Error")
+			print("Error: "..event.response)
+			return false
+		else
+			print("Cloud Storage: "..event.response)
+		end
+	end
+
+	getGM(path, params, networkListener)
 end
 
 -------------------------------------------------
 
-function gameminion:getCloudStorage(storageID)
+function gameminion:getCloudStorage()
 	local params = "auth_token="..self.authToken
 
 	--local path = "storage/"..storageID
-	local path = "storage.json"
+	local path = "storages.xml"
 
 	-- set currentUser when it gets it
 	local  function networkListener(event)
