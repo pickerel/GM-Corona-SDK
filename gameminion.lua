@@ -39,7 +39,9 @@ local gameminion_mt = { __index = gameminion }	-- metatable
 -- HELPERS
 -------------------------------------------------
 
+--local GM_URL = "dev-gameminion.herokuapp.com"
 local GM_URL = "api.gameminion.com"
+local MP_URL = "mp.gameminion.com"
 local GM_ACCESS_KEY = ""
 local GM_SECRET_KEY = ""
 local authToken = ""
@@ -232,7 +234,7 @@ function gameminion.init(accessKey, secretKey)	-- constructor
 		authToken = authToken,
 		accessKey = GM_ACCESS_KEY,
 		secretKey = GM_SECRET_KEY,
-		gameID = "0000000000000000000",
+		gameID = "4f6f1e456b789d0001000002",
 		cloudStorageBox = cloudStorageBox,
 		gameminion = gameminion
 	}
@@ -1258,7 +1260,7 @@ end
 -------------------------------------------------
 
 function gameminion:pollMP(playerID)
-	local path = "http://dev-mp-gameminion.herokuapp.com/receive"
+	local path = "http://"..MP_URL.."/receive"
 	path = path.."?player_id="..playerID
 
 	-- set currentUser when it gets it

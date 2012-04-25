@@ -17,7 +17,7 @@ local json = require("json")
 
 -- initialize Game Minion
 -- Make sure you use your own games keys!
-gm = gm.init("1d84d6e6f8dbb1bb191013d9d2ce05ae158203b9", "e3e1e39c52a6ac3a8b409c52e17a2ce2ef572914")
+gm = gm.init("00a23d5a344b9021481d207b676ecfb1c2a7459f", "5aad1eb3922a796897b51c79f0b1865170690259")
 
 
 -- create new user account or login existing
@@ -28,7 +28,8 @@ gm:loginAPI("jbloggs@mailmail.com", "password")
 local analyticsEvent = {
 	event_type = "Game",
 	message = "New Game Started",
-	name = "Message Name"
+	name = "Message Name",
+	value = ""
 }
 
 -- network save json
@@ -100,10 +101,12 @@ timer.performWithDelay(5000, gmCallListener)
 
 local function mpCallListener()
 	for i=1, 100 do
-		local content = "move "..i
+		--local content = "move "..i
 		--gm:submitMove(content, nil, nil, "4f7309d702b79f000100000b")
+		analyticsEvent.value = i
+		gm:submitEvent(analyticsEvent)
 	end
 	--gm:acceptChallenge("4f71b41173860c0001000001")
 
 end
---timer.performWithDelay(10000, mpCallListener)
+timer.performWithDelay(10000, mpCallListener)
